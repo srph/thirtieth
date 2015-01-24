@@ -31,7 +31,6 @@
     .inner-container {
       display: table-cell;
       vertical-align: middle;
-      clear: both;
     }
 
     .left {
@@ -95,9 +94,11 @@
     }
 
     #exc {
+      font-family: serif;
       margin-top: -15px;
       text-align: left;
       font-size: 240px;
+      text-transform: italic;
     }
 
     h1 {
@@ -130,24 +131,102 @@
       margin-bottom: 5px;
     }
 
-    .hide {
-      opacity: 0;
+    /** 
+     * http://stackoverflow.com/a/17386187/2698227
+     * How to create CSS heart? / Why is this CSS creating a heart shape?
+     * @author Yotam Omer
+     * @link http://stackoverflow.com/users/1645769/yotam-omer
+     */
+    #heart {
+      position: relative;
+      width: 80px;
+      height: 70px;
+      margin-left: 50px;
+    }
+
+     #heart:before, #heart:after { 
+        position: absolute; 
+        content: ""; 
+        left: 50px; 
+        top: 0; 
+        width: 50px; 
+        height: 80px; 
+        background: rgb(250, 146, 146); 
+        border-radius: 50px 50px 0 0;
+        -webkit-transform: rotate(-45deg); /* 45 degrees rotation counter clockwise */
+           -moz-transform: rotate(-45deg); 
+            -ms-transform: rotate(-45deg); 
+             -o-transform: rotate(-45deg); 
+                transform: rotate(-45deg); 
+        -webkit-transform-origin: 0 100%; /* Rotate it around the bottom-left corner */
+           -moz-transform-origin: 0 100%; 
+            -ms-transform-origin: 0 100%; 
+             -o-transform-origin: 0 100%; 
+                transform-origin: 0 100%;
+    }
+
+    #heart:after { 
+      left: 0; /* placing the right part properly */
+      -webkit-transform: rotate(45deg); /* rotating 45 degrees clockwise */
+      -moz-transform: rotate(45deg); 
+      -ms-transform: rotate(45deg); 
+      -o-transform: rotate(45deg); 
+      transform: rotate(45deg); 
+
+      -webkit-transform-origin: 100% 100%; /* rotation is around bottom-right corner this time */
+      -moz-transform-origin: 100% 100%; 
+      -ms-transform-origin: 100% 100%; 
+      -o-transform-origin: 100% 100%; 
+      transform-origin :100% 100%; 
+    } 
+
+
+    .hide { opacity: 0; }
+    .shadow { text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.1); }
+    /**
+     * For modern browsers
+     * 1. The space content is one way to avoid an Opera bug when the
+     *    contenteditable attribute is included anywhere else in the document.
+     *    Otherwise it causes space to appear at the top and bottom of elements
+     *    that are clearfixed.
+     * 2. The use of `table` rather than `block` is only necessary if using
+     *    `:before` to contain the top-margins of child elements.
+     */
+    .cf:before,
+    .cf:after {
+        content: " "; /* 1 */
+        display: table; /* 2 */
+    }
+
+    .cf:after {
+        clear: both;
+    }
+
+    /**
+     * For IE 6/7 only
+     * Include this rule to trigger hasLayout and contain floats.
+     */
+    .cf {
+        *zoom: 1;
     }
   </style>
 </head>
 <body>
   <div class="outer-container">
     <div class="inner-container">
-      <section class="left">
-        <h5 id="happy" class="hide"> Happy </h5>
-        <h2 id="nth" class="hide"> 30th </h2>
-        <h4 id="mnth" class="hide"> Monthsary </h4>
-        <h1 id="bby" class="hide"> Jelai </h1>
-      </section>
+      <div class="cf" style="margin-bottom: 15px;">
+        <section class="left">
+          <h5 id="happy" class="hide shadow"> Happy </h5>
+          <h2 id="nth" class="hide shadow"> 30th </h2>
+          <h4 id="mnth" class="hide shadow"> Monthsary </h4>
+          <h1 id="bby" class="hide shadow"> Jelai </h1>
+        </section>
 
-      <section class="right">
-        <h1 id="exc" class="hide"> &excl; </h1>
-      </section>
+        <section class="right">
+          <h1 id="exc" class="hide"> &excl; </h1>
+        </section>
+      </div>
+      <div id="heart" class="hide shadow"></div>
     </div>
   </div>
 
@@ -158,6 +237,7 @@
      var $mnth = $('#mnth');
      var $bby = $('#bby');
      var $exc = $('#exc');
+     var $h = $('#heart');
      var _  = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
 
     jQuery(document).ready(function() {
@@ -166,7 +246,7 @@
       $nth.one(_, iMnth);
       $mnth.one(_, iBby);
       $bby.one(_, iExc);
-      $exc.one(_, nthTada);
+      $exc.one(_, function() { nthTada(); iH(); });
       // $Exc.one(_, iNth);
       // Happy
       // 30th
@@ -178,6 +258,7 @@
       function iBby() { $bby.css('opacity', 1).addClass('lightSpeedIn animated'); }
       function iExc() { $exc.css('opacity', 1).addClass('flipInX animated'); }
       function nthTada() { $nth.removeClass('fadeInLeft animated').addClass('shake animated infinite'); }
+      function iH() { $h.css('opacity', 1).addClass('fadeInUp animated'); }
     });
   </script>
 </body>
