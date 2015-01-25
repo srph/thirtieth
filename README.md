@@ -6,6 +6,10 @@
 
 A gift, built with jQ, animate.css, and some help with normalize.css
 
+### Update
+
+She liked it! Success! :heart:
+
 ## Acknowledgement
 
 [Gradient BG (Stock Photo)](http://photoblog.creationfixation.com/) from [Creation Fixation](http://creationfixation.com/)'s [Photo Blog](http://photoblog.creationfixation.com/).
